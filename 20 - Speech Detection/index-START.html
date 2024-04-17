@@ -35,7 +35,7 @@
 
     const paragraphs = document.querySelectorAll('p');
     paragraphs.forEach(paragraph => {
-      paragraph.innerHTML = paragraph.innerHTML.replace(new RegExp('bonjour'), word => `<span style="color: red;">${word}</span>`)
+      paragraph.innerHTML = paragraph.innerHTML.replace(new RegExp('\\b[bB]\\w*', 'g'), word => `<span style="color: red;">${word}</span>`)
       paragraph.innerHTML = paragraph.innerHTML.replace(new RegExp('caca', 'gi'), '<span class="poop">💩💩💩</span>');
     })
   })
