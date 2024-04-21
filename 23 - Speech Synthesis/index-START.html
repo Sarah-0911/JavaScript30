@@ -42,26 +42,37 @@
   const populateVoices = e => {
     voices = e.target.getVoices();
     console.log(voices);
-    voicesDropdown.innerHTML = voices.map(voice => {
+    voicesDropdown.innerHTML = voices
+      // .filter(voice => voice.lang.includes('fr'))
+      .map(voice => {
       return `<option value ="${voice.name}">${voice.name} ${voice.lang}</option>`
     }).join('');
-  }
+  };
 
   const setVoice = e => {
     // console.log(e.target.value);
     msg.voice = voices.find(voice => voice.name === e.target.value);
     toggle();
-  }
+  };
 
   const toggle = (startOver = true) => {
     speechSynthesis.cancel();
     if (startOver) {
       speechSynthesis.speak(msg);
     }
-  }
+  };
+
+  const setOption = e => {
+    console.log(e.target.name, e.target.value);
+    msg[e.target.name] = e.target.value;
+    toggle();
+  };
 
   speechSynthesis.addEventListener('voiceschanged', populateVoices);
   voicesDropdown.addEventListener('change', setVoice);
+  options.forEach(option => option.addEventListener('change', setOption));
+  speakButton.addEventListener('click', toggle);
+  stopButton.addEventListener('click', () => toggle(false));
 
 </script>
 
