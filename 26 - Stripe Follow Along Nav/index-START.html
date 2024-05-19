@@ -228,17 +228,35 @@
   const handleEnter = e => {
     e.target.classList.add('trigger-enter');
     setTimeout(() => {
-      e.target.classList.add('trigger-enter-active');
+      e.target.classList.contains('trigger-enter') && e.target.classList.add('trigger-enter-active')
     }, 150);
+    background.classList.add('open');
+
+    const dropdown = e.target.querySelector('.dropdown');
+
+    const dropdownCoords = dropdown.getBoundingClientRect();
+    const navCoords = nav.getBoundingClientRect();
+
+    const coords = {
+      width: dropdownCoords.width,
+      height: dropdownCoords.height,
+      top: dropdownCoords.top - navCoords.top,
+      left: dropdownCoords.left - navCoords.left
+    }
+
+    background.style.setProperty('width', `${coords.width}px`);
+    background.style.setProperty('height', `${coords.height}px`);
+    background.style.setProperty('transform', `translate(${coords.left}px, ${coords.top}px)`);
   }
 
-  const handleLeave = () => {
-
+  const handleLeave = e => {
+    e.target.classList.remove('trigger-enter', 'trigger-enter-active');
+    background.classList.remove('open');
   }
 
   triggers.forEach(trigger => trigger.addEventListener('mouseenter',handleEnter));
   triggers.forEach(trigger => trigger.addEventListener('mouseleave',handleLeave));
-
+  
 </script>
 
 </body>
